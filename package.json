@@ -1,0 +1,37 @@
+{
+  "name": "medibook-hms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MediBook HMS — MVP hospital management system",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,worker,web -c cyan,yellow,magenta \"npm run dev -w server\" \"npm run dev:worker -w server\" \"npm run dev -w web\"",
+    "build": "npm run build -w server && npm run build -w web",
+    "db:migrate": "npm run db:migrate -w server",
+    "db:seed": "npm run db:seed -w server",
+    "test": "npm test -w server && npm run typecheck -w web",
+    "db:reset": "npm run db:reset -w server",
+    "db:backup": "node scripts/db-backup.mjs",
+    "db:restore": "node scripts/db-restore.mjs",
+    "mail:test": "npm run mail:test -w server --",
+    "test:e2e": "playwright test",
+    "demo:video": "playwright test -c playwright.demo.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "concurrently": "^9.1.0"
+  },
+  "allowScripts": {
+    "@prisma/client@6.19.3": true,
+    "prisma@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.25.12": true
+  }
+}
